@@ -1,0 +1,22 @@
+
+spring:
+  profiles:
+    active: dev
+
+  kafka:
+    bootstrap-servers: eh-sddo-backend.servicebus.windows.net:9093
+    client-id: first-producer
+    properties:
+      sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="$ConnectionString" password="Endpoint=sb://eh-sddo-backend.servicebus.windows.net/;SharedAccessKeyName=QuotationAccessKey;SharedAccessKey=QC7XG4rhECdVr4NEwbiiHY/Bk+17K2XkY+AEhL/FE8w=";
+      sasl.mechanism: PLAIN
+      security.protocol: SASL_SSL
+    producer:
+      value-serializer: br.com.sennatech.wasddopayments.integration.ProducerMessageSerializer
+    consumer:
+      group-id: $Default
+      properties:
+        spring.json:
+          use.type.headers: false
+          value.default.type: br.com.sennatech.wasddopayments.dto.paymentDTO
+topic:
+  name: topico-sddo-pagamento
