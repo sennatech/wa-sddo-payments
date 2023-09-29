@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:sqlserver://dbs-sddo-dev.database.windows.net:1433;database=db-sddo-dev;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+    username: sennatechadmin
+    password: adm@Sennatech
+
+  jpa:
+    database-platform: org.hibernate.dialect.SQLServerDialect
+    hibernate:
+      ddl-auto: update
+
+    properties:
+        hibernate:
+          globally_quoted_identifiers: true
+          globally_quoted_identifiers_skip_column_definitions: true
