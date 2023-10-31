@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "payment")
+@Table(name = "payments")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,7 +22,7 @@ public class FinalPaymentResponse {
     @Column(nullable = false, length = 50)
     private String transaction;
     @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal paymentValue;
+    private BigDecimal amount;
     @Column(nullable = false)
     private LocalDateTime dateTime = LocalDateTime.now();
 }

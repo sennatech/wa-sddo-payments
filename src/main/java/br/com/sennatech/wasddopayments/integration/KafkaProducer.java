@@ -25,7 +25,7 @@ public class KafkaProducer {
     public FinalPaymentResponse send(PaymentRequestDTO request) {
         var paymentResponse = new FinalPaymentResponse();
         paymentResponse.setTransaction(generatesTransactionCode.createCode());
-        paymentResponse.setPaymentValue(request.getValue());
+        paymentResponse.setAmount(request.getAmount());
 
         FinalPaymentResponse savedPayment = finalPaymentResponseRepository.save(paymentResponse);
 
@@ -33,8 +33,8 @@ public class KafkaProducer {
         finalPayment.setData(savedPayment);
 
         this.kafkaTemplate.send(topicName,finalPayment );
-        log.info("Published the value [{}], to the kafka queue: [{}]",
-                request.getValue(),
+        log.info("Published the amount [{}], to the kafka queue: [{}]",
+                request.getAmount(),
                 topicName
         );
         return savedPayment;

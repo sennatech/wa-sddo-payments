@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class Installments{
     private int number;
-    private double value;
+    private double amount;
 }

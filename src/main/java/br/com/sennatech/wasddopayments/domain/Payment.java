@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Payment {
-    private double value;
+    private double amount;
     private String cardToken;
     private String document;
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class PaymentRequestDTO {
-    private BigDecimal value;
+    private BigDecimal amount;
     private String cardToken;
     private String document;
     private List<Installments> installments;
