@@ -3,16 +3,18 @@ package br.com.sennatech.wasddopayments.domain.dto;
 import br.com.sennatech.wasddopayments.domain.FinalPaymentResponse;
 import lombok.*;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 public class PaymentKafkaMessage {
-    LocalDateTime timestamp = LocalDateTime.now();
-    String operation = "PAGAMENTO" ;
+    String  timestamp = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(new Date());
+    String operation = "PAYMENT_CREATED" ;
     String domain = "SEGURO";
-    String origin = "SEGURATECH";
+    String origin = "Asseguraê";
     @Setter
     FinalPaymentResponse data;
 }
