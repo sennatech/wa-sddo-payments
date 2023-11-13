@@ -11,7 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 public class PaymentKafkaMessage {
-    String  timestamp = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(new Date());
+    String  timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
     String operation = "PAYMENT_CREATED" ;
     String domain = "SEGURO";
     String origin = "Asseguraê";
