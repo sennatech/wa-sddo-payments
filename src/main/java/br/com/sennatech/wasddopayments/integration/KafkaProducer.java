@@ -37,7 +37,7 @@ public class KafkaProducer {
                 request.getAmount(),
                 topicName
         );
-        return savedPayment;
+        return paymentResponse;
     }
 
 }
