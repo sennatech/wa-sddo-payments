@@ -25,11 +25,4 @@ public class FinalPaymentResponse {
     private BigDecimal amount;
     @Column(nullable = false)
     private LocalDateTime dateTime = LocalDateTime.now();
-    @Transient
-    private String domain = "Seguro";
-    @Transient
-    private String origin = "Asseguraê";
-    @Transient
-    private String operation = "PAYMENT_CREATED";
-
 }
