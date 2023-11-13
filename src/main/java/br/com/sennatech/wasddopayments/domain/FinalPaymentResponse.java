@@ -20,7 +20,7 @@ public class FinalPaymentResponse {
     @Column(unique = true, updatable = false, nullable = false)
     private Long id;
     @Column(nullable = false, length = 50)
-    private String transaction;
+    private String transactionId;
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal amount;
     @Column(nullable = false)

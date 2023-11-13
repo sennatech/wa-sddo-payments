@@ -24,13 +24,15 @@ public class KafkaProducer {
 
     public FinalPaymentResponse send(PaymentRequestDTO request) {
         var paymentResponse = new FinalPaymentResponse();
-        paymentResponse.setTransaction(generatesTransactionCode.createCode());
+        paymentResponse.setTransactionId(generatesTransactionCode.createCode());
         paymentResponse.setAmount(request.getAmount());
 
         FinalPaymentResponse savedPayment = finalPaymentResponseRepository.save(paymentResponse);
 
         var finalPayment = new PaymentKafkaMessage();
         finalPayment.setData(savedPayment);
+
+        log.info("FinalPaymentResponse: {}", savedPayment);
 
         this.kafkaTemplate.send(topicName,finalPayment );
         log.info("Published the amount [{}], to the kafka queue: [{}]",
