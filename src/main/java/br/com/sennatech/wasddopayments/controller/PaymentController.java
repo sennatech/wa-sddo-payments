@@ -1,6 +1,7 @@
 package br.com.sennatech.wasddopayments.controller;
 
 import br.com.sennatech.wasddopayments.domain.FinalPaymentResponse;
+import br.com.sennatech.wasddopayments.domain.dto.FinalPaymentResponseKafka;
 import br.com.sennatech.wasddopayments.domain.dto.PaymentRequestDTO;
 import br.com.sennatech.wasddopayments.integration.KafkaProducer;
 import lombok.RequiredArgsConstructor;
@@ -14,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/payments")
 @RequiredArgsConstructor
 public class PaymentController {
-
     private final KafkaProducer kafkaProducer;
+
     @PostMapping
-    public ResponseEntity<FinalPaymentResponse> createpayment(@RequestBody PaymentRequestDTO request) {
-        var completoPayment = kafkaProducer.send(request);
-        return ResponseEntity.ok().body(completoPayment);
+    public ResponseEntity<FinalPaymentResponseKafka> createPayment(@RequestBody PaymentRequestDTO request) {
+        var finalPaymentResponse = kafkaProducer.send(request);
+        return ResponseEntity.ok().body(finalPaymentResponse);
     }
 }

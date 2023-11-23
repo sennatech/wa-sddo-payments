@@ -16,5 +16,5 @@ public class PaymentKafkaMessage {
     String domain = "SEGURO";
     String origin = "Asseguraê";
     @Setter
-    FinalPaymentResponse data;
+    FinalPaymentResponseKafka data;
 }

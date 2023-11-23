@@ -1,6 +1,7 @@
 package br.com.sennatech.wasddopayments.integration;
 
 import br.com.sennatech.wasddopayments.domain.FinalPaymentResponse;
+import br.com.sennatech.wasddopayments.domain.dto.FinalPaymentResponseKafka;
 import br.com.sennatech.wasddopayments.domain.dto.PaymentKafkaMessage;
 import br.com.sennatech.wasddopayments.domain.dto.PaymentRequestDTO;
 import br.com.sennatech.wasddopayments.service.GeneratesTransactionCode;
@@ -22,24 +23,43 @@ public class KafkaProducer {
     @Value("${topic.name}")
     private String topicName;
 
-    public FinalPaymentResponse send(PaymentRequestDTO request) {
+    public FinalPaymentResponseKafka send(PaymentRequestDTO request) {
         var paymentResponse = new FinalPaymentResponse();
         paymentResponse.setTransactionId(generatesTransactionCode.createCode());
         paymentResponse.setAmount(request.getAmount());
 
         FinalPaymentResponse savedPayment = finalPaymentResponseRepository.save(paymentResponse);
 
+        var finalPaymentResponseKafka = new FinalPaymentResponseKafka();
+        finalPaymentResponseKafka.setId(savedPayment.getId());
+        finalPaymentResponseKafka.setTransactionId(savedPayment.getTransactionId());
+        finalPaymentResponseKafka.setAmount(savedPayment.getAmount());
+        finalPaymentResponseKafka.setDateTime(savedPayment.getDateTime());
+        finalPaymentResponseKafka.setDocumentNumber(request.getDocument());
+
         var finalPayment = new PaymentKafkaMessage();
-        finalPayment.setData(savedPayment);
+        finalPayment.setData(finalPaymentResponseKafka);
 
-        log.info("FinalPaymentResponse: {}", savedPayment);
+        log.info("FinalPaymentResponseKafka: {}", finalPaymentResponseKafka);
 
-        this.kafkaTemplate.send(topicName,finalPayment );
-        log.info("Published the amount [{}], to the kafka queue: [{}]",
+        this.kafkaTemplate.send(topicName, finalPayment);
+        log.info("Publicado o valor [{}], na fila do Kafka: [{}]",
                 request.getAmount(),
                 topicName
         );
-        return savedPayment;
+
+        return finalPaymentResponseKafka;
     }
 
+    public FinalPaymentResponse sendToController(PaymentRequestDTO request) {
+        var paymentResponse = new FinalPaymentResponse();
+        paymentResponse.setTransactionId(generatesTransactionCode.createCode());
+        paymentResponse.setAmount(request.getAmount());
+
+        FinalPaymentResponse savedPayment = finalPaymentResponseRepository.save(paymentResponse);
+
+        log.info("FinalPaymentResponse: {}", savedPayment);
+
+        return savedPayment;
+    }
 }
